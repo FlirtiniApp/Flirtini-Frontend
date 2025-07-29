@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="h-[96vh] fixed w-[11vw] flex flex-col justify-between my-[2vh] px-4 border-r-2 border-gray-500">
+    <div className="h-[96vh] fixed w-[11vw] min-w-fit flex flex-col justify-between my-[2vh] px-4 border-r-2 border-gray-500">
       <div className="flex items-center gap-2">
-        <img className="w-[3vw]" src="/Flirtini/logo.png" alt="Flirtini Logo" />
+        <img className="w-[50px]" src="/Flirtini/logo.png" alt="Flirtini Logo" />
         <h1 className="text-white text-2xl font-bold font-[Dancing_Script]">
           Flirtini
         </h1>
