@@ -1,6 +1,6 @@
 import "./App.css";
 import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Sidebar from "./components/Sidebar";
 import Loader from "./components/Loader";
 
@@ -19,6 +19,7 @@ function Layout() {
     "/liked",
     "/compose",
     "/todays-choice",
+    "/"
     // jak jakaś ścieżka ma nie mieć sidebara to wystarczy jej tu NIE WPISAĆ
   ].includes(path);
 
