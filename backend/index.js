@@ -1,13 +1,12 @@
-const dotenv = require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 3000;
-const mongoose = require('mongoose');
+const connectDB = require('./components/database');
 
 app.use(express.json());
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_PASSWORD}@flirtini.5tabe6e.mongodb.net/Flirtini?retryWrites=true&w=majority&appName=Flirtini`)
-    .then(() => {
+connectDB()
+.then(() => {
         console.log("connected to db");
         app.listen(port, () => {
             console.log(`Example app listening on port ${port}`);
