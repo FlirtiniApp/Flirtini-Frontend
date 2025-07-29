@@ -1,16 +1,56 @@
-import './App.css'
-import axios from 'axios';
-import Sidebar from './components/Sidebar';
+import "./App.css";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import Sidebar from "./components/Sidebar";
+import Loader from "./components/Loader";
 
+const Explore = lazy(() => import("./sites/Explore"));
+const Liked = lazy(() => import("./sites/Liked"));
+const Compose = lazy(() => import("./sites/Compose"));
+const TodaysChoice = lazy(() => import("./sites/TodaysChoice"));
+const Profile = lazy(() => import("./sites/Profile"));
 
-function App() {
+function Layout() {
+  const location = useLocation();
+  const path = location.pathname;
+
+  const showSidebar = [
+    "/explore",
+    "/liked",
+    "/compose",
+    "/todays-choice",
+    // jak jakaś ścieżka ma nie mieć sidebara to wystarczy jej tu NIE WPISAĆ
+  ].includes(path);
 
   return (
-    <div className="w-[100vw] min-h-[100vh] h-fit bg-gray-900 flex items-center">
-      <Sidebar />
-      <content className="flex-1"></content>
+    <div className="flex h-screen bg-gray-900 text-white">
+      {showSidebar && <Sidebar />}
+      <main
+        className={`flex-1 overflow-y-auto p-8 ${
+          showSidebar ? "ml-[11vw]" : ""
+        }`}
+      >
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<Explore />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/liked" element={<Liked />} />
+            <Route path="/compose" element={<Compose />} />
+            <Route path="/todays-choice" element={<TodaysChoice />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </Suspense>
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+function App() {
+  return (
+    <HashRouter>
+      <Layout />
+    </HashRouter>
+  );
+}
+
+export default App;
