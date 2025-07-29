@@ -1,13 +1,15 @@
 import './App.css'
 import axios from 'axios';
+import Sidebar from './components/Sidebar';
 
 
 function App() {
-  
+
   return (
-    <>
-      <div>Hello world! This project uses react as frontend, tailwind for style and express for backend. Axios on frontend is supposed to make requests to backend There is nodemon installed on backend so when you start backend and change something, it will update <span className="text-blue-500">automatically</span>.</div>
-    </>
+    <div className="w-[100vw] min-h-[100vh] h-fit bg-gray-900 flex items-center">
+      <Sidebar />
+      <content className="flex-1"></content>
+    </div>
   )
 }
 
