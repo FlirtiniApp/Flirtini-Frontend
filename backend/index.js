@@ -6,7 +6,7 @@ const database = require('./components/database');
 app.use(express.json());
 
 // Connect to the database and start the server
-database.connectDB()
+database.connectToDatabase()
     .then(() => {
         console.log("connected to database");
         app.listen(port, () => {
@@ -18,8 +18,11 @@ database.connectDB()
         console.log(err);
     });
 
-//user creation route
+// User creation route
 app.post('/users/create', database.createUserHandler);
+
+// All users retrieval route
+app.get('/users', database.getUserHandler);
 
 
 //EXAMPLE USER DATA
