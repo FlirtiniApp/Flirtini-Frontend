@@ -1,15 +1,16 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const connectDB = require('./components/database');
+const database = require('./components/database');
 
 app.use(express.json());
 
-connectDB()
-.then(() => {
-        console.log("connected to db");
+// Connect to the database and start the server
+database.connectDB()
+    .then(() => {
+        console.log("connected to database");
         app.listen(port, () => {
-            console.log(`Example app listening on port ${port}`);
+            console.log(`App listening on port ${port}`);
         });
     })
     .catch((err) => {
@@ -17,11 +18,8 @@ connectDB()
         console.log(err);
     });
 
-
-app.post('/api/users', (req, res) => {
-    console.log(req.body);
-    res.send(req.body);
-});
+//user creation route
+app.post('/users/create', database.createUserHandler);
 
 
 //EXAMPLE USER DATA

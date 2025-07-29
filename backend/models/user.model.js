@@ -16,7 +16,12 @@ const UserSchema = mongoose.Schema(
             required: [true, 'Email is required'],
             unique: true,
         },
-        favourites: {
+        favouriteDrinks: {
+            type: [String],
+            required: false,
+            default: []
+        },
+        favouriteIngredients: {
             type: [String],
             required: false,
             default: []
