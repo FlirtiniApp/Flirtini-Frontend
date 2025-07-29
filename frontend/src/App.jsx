@@ -1,7 +1,8 @@
 import './App.css'
+import axios from 'axios';
+
 
 function App() {
-  const axios = require('axios');
   
   return (
     <>
