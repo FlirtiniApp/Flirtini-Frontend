@@ -9,7 +9,7 @@ const Sidebar = () => {
 
             <div className="flex flex-col gap-5">
                 <a href="#" className="text-gray-300 text-md hover:text-white transition-colors duration-200 flex gap-2 flex-nowrap">
-                    <span class="material-symbols-outlined">explore</span>
+                    <span className="material-symbols-outlined">explore</span>
                     <p>Explore</p>
                 </a>
                 <a href="#" className="text-gray-300 text-md hover:text-white transition-colors duration-200 flex gap-2 flex-nowrap">
@@ -17,7 +17,7 @@ const Sidebar = () => {
                     <p>Liked</p>
                 </a>
                 <a href="#" className="text-gray-300 text-md hover:text-white transition-colors duration-200 flex gap-2 flex-nowrap">
-                    <span class="material-symbols-outlined">local_bar</span>
+                    <span className="material-symbols-outlined">local_bar</span>
                     <p>Compose</p>
                 </a>
                 <a href="#" className="text-gray-300 text-md hover:text-white transition-colors duration-200 flex gap-2 flex-nowrap">
