@@ -19,6 +19,12 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_P
     });
 
 
+app.post('/api/users', (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
+});
+
+
 //EXAMPLE USER DATA
 const users = [
     { id: 1, username: 'alice', password: 'pass1' },
