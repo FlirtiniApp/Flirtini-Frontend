@@ -1,22 +1,28 @@
-const dotenv = require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 3000;
-const mongoose = require('mongoose');
+const database = require('./components/database');
 
 app.use(express.json());
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_PASSWORD}@flirtini.5tabe6e.mongodb.net/Flirtini?retryWrites=true&w=majority&appName=Flirtini`)
+// Connect to the database and start the server
+database.connectToDatabase()
     .then(() => {
-        console.log("connected to db");
+        console.log("connected to database");
         app.listen(port, () => {
-            console.log(`Example app listening on port ${port}`);
+            console.log(`App listening on port ${port}`);
         });
     })
     .catch((err) => {
         console.log("something done goofed");
         console.log(err);
     });
+
+// User creation route
+app.post('/users/create', database.createUserHandler);
+
+// All users retrieval route
+app.get('/users', database.getUserHandler);
 
 
 //EXAMPLE USER DATA
