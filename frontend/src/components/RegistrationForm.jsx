@@ -63,11 +63,7 @@ export default function RegistrationForm() {
 
   const handleSubmit = e => { 
     e.preventDefault(); 
-    setIsSubmitting(true); 
-    setTimeout(() => { 
-      alert("Submitted!\n" + JSON.stringify(form, null, 2)); 
-      setIsSubmitting(false); 
-    }, 1500); 
+    console.log("Submitted!\n" + JSON.stringify(form, null, 2));
   };
 
   const nextStep = () => { 
