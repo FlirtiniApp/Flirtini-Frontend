@@ -19,7 +19,7 @@ function Layout() {
     "/liked",
     "/compose",
     "/todays-choice",
-    "/"
+    "/",
     // jak jakaś ścieżka ma nie mieć sidebara to wystarczy jej tu NIE WPISAĆ
   ].includes(path);
 
@@ -45,7 +45,6 @@ function Layout() {
     </div>
   );
 }
-
 function App() {
   return (
     <HashRouter>
