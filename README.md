@@ -1,12 +1,21 @@
-# React + Vite
+# Flirtini
+Project proposal dated 30/07/2025.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## MVP state for project
+MVP state for project should contain:
+- Database for accounts and users' likes,
+- Backend and frontend for managing accounts (CRUD, register page, login page, profile page),
+- API for getting drinks data from [there](https://www.thecocktaildb.com/) (https://www.thecocktaildb.com/),
+- Explore page showing drinks in tinder-like style which users can either like or trash
+- Likes page which displays user-liked drinks
+- Backend for managing users' likes,
 
-Currently, two official plugins are available:
+## Technologies used
+- **MongoDB** for database,
+- **React** framework for frontend,
+- Packages to frontend: **Tailwindcss**, **axios**,
+- **Express** framework for backend,
+- Packages to backend: **nodemon**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## API definitions
+i dont know yet because i have no idea what it is and how to use it ;)
