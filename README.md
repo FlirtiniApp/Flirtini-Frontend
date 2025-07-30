@@ -17,5 +17,12 @@ MVP state for project should contain:
 - **Express** framework for backend,
 - Packages to backend: **nodemon**.
 
+## mikroserwisy:
+- accounts - Alex Szymański
+- alcohol API - Kacper Jaroszewski
+- drinks list - Antoni Witkowski
+- friends - Wiktor Ilczuk
+- bar locator - Jakub Zieliński
+
 ## API definitions
 i dont know yet because i have no idea what it is and how to use it ;)
