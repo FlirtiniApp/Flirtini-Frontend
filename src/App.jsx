@@ -26,11 +26,7 @@ function Layout() {
   return (
     <div className="flex h-screen bg-gray-900 text-white">
       {showSidebar && <Sidebar />}
-      <main
-        className={`flex-1 overflow-y-auto p-8 ${
-          showSidebar ? "ml-[11vw]" : ""
-        }`}
-      >
+      <main className={`flex-1 overflow-y-auto p-8 ${showSidebar ? "ml-[11vw]" : ""}`}>
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<Explore />} />

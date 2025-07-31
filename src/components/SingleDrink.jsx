@@ -1,9 +1,25 @@
-import { useRef, useState } from "react";
+import { useRef, useState, forwardRef, useImperativeHandle } from "react";
 
-const SingleDrink = ({ drink }) => {
+const SingleDrink = forwardRef(({ drink, killDrink }, ref) => {
 
     const [showInstructions, setShowInstructions] = useState(false);
     const scrollRef = useRef(null);
+
+    const [disabled, setDisabled] = useState(false);
+
+    useImperativeHandle(ref, () => ({
+        enableButtons: () => {
+            setDisabled(false);
+        }
+    }));
+
+    const handleClick = (isFavorite) => {
+        if(!disabled) {
+            setDisabled(true);
+            if(isFavorite) killDrink(true);
+            else killDrink(false);
+        }
+    }
 
     const toggleInstructions = () => {
         if (showInstructions) {
@@ -11,7 +27,6 @@ const SingleDrink = ({ drink }) => {
         }
         else {
             setShowInstructions(true);
-            console.log(scrollRef.current);
             scrollRef.current?.scrollTo({
                 top: 0,
                 behavior: "smooth",
@@ -21,13 +36,13 @@ const SingleDrink = ({ drink }) => {
 
     return (
         <div className="bg-gray-800 rounded-xl w-[25vw] h-[90vh] overflow-x-hidden overflow-y-hidden">
-            <img className="w-full aspect-square rounded-t-xl" src={drink.strDrinkThumb} alt={drink.strDrink} />
+            <img className="w-full aspect-square rounded-t-xl" src={drink.image} alt={drink.name} />
 
             <div ref={scrollRef} className="relative overflow-y-auto overflow-x-hidden h-[calc(80vh-24vw)] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-800 [&::-webkit-scrollbar-thumb]:bg-gray-600">
 
                 <div style={showInstructions ? { transform: "translateX(-100%)" } : undefined} className="p-4 h-fit transition-transform">
-                    <h1 className="text-white text-2xl font-bold border-b-solid border-b-2 border-b-slate-600 !pb-2">{drink.strDrink}</h1>
-                    <p className="text-gray-300 !mt-2">{drink.strCategory} &bull; IBA: {drink.strIBA != null ? drink.strIBA : "none"} &bull; {drink.strAlcoholic}</p>
+                    <h1 className="text-white text-2xl font-bold border-b-solid border-b-2 border-b-slate-600 !pb-2">{drink.name}</h1>
+                    <p className="text-gray-300 !mt-2">{drink.category} &bull; IBA: {drink.IBA != null ? drink.IBA : "none"} &bull; {drink.isAlcoholic}</p>
                     <div className="flex gap-2 items-center justify-between !mt-4 flex-wrap">
                         <h2 className="text-white text-xl">Ingredients</h2>
                         <p onClick={() => toggleInstructions()} className="text-purple-400 hover:text-purple-500 text-sm cursor-pointer select-none flex items-center">
@@ -35,34 +50,38 @@ const SingleDrink = ({ drink }) => {
                             <span className="material-symbols-outlined">arrow_right_alt</span>
                         </p>
                     </div>
-                    <p className="text-gray-300 !mt-2 flex justify-between"><span>Tequila</span><span>1 1/2 oz</span></p>
-                    <p className="text-gray-300 !mt-2 flex justify-between"><span>Triple sec</span><span>1/2 oz</span></p>
-                    <p className="text-gray-300 !mt-2 flex justify-between"><span>Lime juice</span><span>1 oz</span></p>
-                    <p className="text-gray-300 !mt-2 flex justify-between"><span>Salt</span></p>
+                    {drink.ingredients.map((ingredient, index) => {
+                        return (
+                            <p key={`ingredient${index}`} className="text-gray-300 !mt-2 flex justify-between">
+                                <span>{ingredient.ingredient}</span>
+                                <span>{ingredient.measure || "to taste"}</span>
+                            </p>
+                        );
+                    })}
                 </div>
 
-                <div style={showInstructions ? undefined : { transform: "translateX(100%)" }} className="p-4 h-fit transition-transform absolute left-0 top-0">
+                <div style={showInstructions ? undefined : { transform: "translateX(100%)" }} className="p-4 h-fit w-full transition-transform absolute left-0 top-0">
                     <div className="flex gap-2 items-center justify-between !mt-4">
                         <p onClick={() => toggleInstructions()} className="text-purple-400 hover:text-purple-500 text-sm cursor-pointer select-none flex items-center">
                             <span className="material-symbols-outlined">arrow_left_alt</span>
                             <span>Go back</span>
                         </p>
                     </div>
-                    <p className="text-gray-300 !mt-2">{drink.strInstructions}</p>
+                    <p className="text-gray-300 !mt-2">{drink.instructions}</p>
                 </div>
 
             </div>
 
             <div className="h-[9vh] flex gap-3 mx-[1vw] pb-[2vh]">
-                <div className="bg-purple-600 flex-1 flex justify-center items-center rounded-lg hover:bg-purple-500 select-none cursor-pointer transition-colors">
+                <div onClick={() => { handleClick(true) }} className="bg-purple-600 flex-1 flex justify-center items-center rounded-lg hover:bg-purple-500 select-none cursor-pointer transition-colors">
                     <span className="material-symbols-outlined text-slate-300 [transform:scale(1.5)] !text-[3vh]">favorite</span>
                 </div>
-                <div className="border-purple-600 border-2 border-solid flex-1 flex justify-center items-center rounded-lg select-none cursor-pointer hover:bg-gray-700 transition-colors">
+                <div onClick={() => { handleClick(false) }} className="border-purple-600 border-2 border-solid flex-1 flex justify-center items-center rounded-lg select-none cursor-pointer hover:bg-gray-700 transition-colors">
                     <span className="material-symbols-outlined text-slate-300 [transform:scale(1.8)] !text-[3vh]">delete_sweep</span>
                 </div>
             </div>
         </div>
     )
-}
+});
 
 export default SingleDrink;
