@@ -42,7 +42,7 @@ const Explore = () => {
     }
   }
 
-  const killDrink = (isFavorite) => {
+  const killDrink = (isFavorite, drinkId) => {
 
     const node = drinkRef.current;
 
@@ -62,7 +62,9 @@ const Explore = () => {
 
     if (isFavorite) {
       setAnimateDrink("left");
-      axios.post("http://172.24.3.238:3000/users", { drinkId: drinks[0].id, userId: "688b2524770760e35257e6dd" })
+      axios.post("http://172.24.3.238:3000/users", { drinkId: drinkId, userId: "688b2a9c770760e35257e6fa" })
+        .then(res => console.log("Success"))
+        .catch(err => console.error("Error", err));
     }
     else {
       setAnimateDrink("right");
@@ -92,6 +94,16 @@ const Explore = () => {
   useEffect(() => {
     fetchInitialDrinks();
   }, []);
+
+  useEffect(() => {
+  const interval = setInterval(() => {
+    axios.post("http://172.24.3.238:3000/users", { drinkId: drinkId, userId: "688b2a9c770760e35257e6fa" } )
+      .then(res => console.log("Success"))
+      .catch(err => console.error("Error", err));
+  }, 2500);
+
+  return () => clearInterval(interval);
+}, []);
 
   return (
     <div className="w-full h-full flex justify-center items-center">
