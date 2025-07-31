@@ -5,6 +5,7 @@ import SingleDrink from "../components/SingleDrink";
 const Explore = () => {
 
   const drinkRef = useRef(null);
+  const drinkComponentRef = useRef(null);
 
   const [drinks, setDrinks] = useState([]);
 
@@ -61,6 +62,7 @@ const Explore = () => {
 
     if (isFavorite) {
       setAnimateDrink("left");
+      axios.post("http://172.24.3.238:3000/users", { drinkId: drinks[0].id, userId: "688b2524770760e35257e6dd" })
     }
     else {
       setAnimateDrink("right");
@@ -80,6 +82,7 @@ const Explore = () => {
         node.removeEventListener("transitionend", handleTransitionEnd);
 
         setTransitionDrink(1);
+        drinkComponentRef.current.enableButtons();
       };
 
       node.addEventListener("transitionend", handleTransitionEnd);
@@ -93,7 +96,7 @@ const Explore = () => {
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div ref={drinkRef} className={`w-fit h-fit ${transitionDrinkVariants[transitionDrink]} ease-in-out duration-500 ${animationVariants[animateDrink]}`}>
-        {drinks[0] && <SingleDrink drink={drinks[0]} killDrink={killDrink} />}
+        {drinks[0] && <SingleDrink ref={drinkComponentRef} drink={drinks[0]} killDrink={killDrink} />}
       </div>
     </div>
   )

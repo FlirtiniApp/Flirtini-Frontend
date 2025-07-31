@@ -1,9 +1,25 @@
-import { useRef, useState } from "react";
+import { useRef, useState, forwardRef, useImperativeHandle } from "react";
 
-const SingleDrink = ({ drink, killDrink }) => {
+const SingleDrink = forwardRef(({ drink, killDrink }, ref) => {
 
     const [showInstructions, setShowInstructions] = useState(false);
     const scrollRef = useRef(null);
+
+    const [disabled, setDisabled] = useState(false);
+
+    useImperativeHandle(ref, () => ({
+        enableButtons: () => {
+            setDisabled(false);
+        }
+    }));
+
+    const handleClick = (isFavorite) => {
+        if(!disabled) {
+            setDisabled(true);
+            if(isFavorite) killDrink(true);
+            else killDrink(false);
+        }
+    }
 
     const toggleInstructions = () => {
         if (showInstructions) {
@@ -57,15 +73,15 @@ const SingleDrink = ({ drink, killDrink }) => {
             </div>
 
             <div className="h-[9vh] flex gap-3 mx-[1vw] pb-[2vh]">
-                <div onClick={() => {killDrink(true)}} className="bg-purple-600 flex-1 flex justify-center items-center rounded-lg hover:bg-purple-500 select-none cursor-pointer transition-colors">
+                <div onClick={() => { handleClick(true) }} className="bg-purple-600 flex-1 flex justify-center items-center rounded-lg hover:bg-purple-500 select-none cursor-pointer transition-colors">
                     <span className="material-symbols-outlined text-slate-300 [transform:scale(1.5)] !text-[3vh]">favorite</span>
                 </div>
-                <div onClick={() => {killDrink(false)}} className="border-purple-600 border-2 border-solid flex-1 flex justify-center items-center rounded-lg select-none cursor-pointer hover:bg-gray-700 transition-colors">
+                <div onClick={() => { handleClick(false) }} className="border-purple-600 border-2 border-solid flex-1 flex justify-center items-center rounded-lg select-none cursor-pointer hover:bg-gray-700 transition-colors">
                     <span className="material-symbols-outlined text-slate-300 [transform:scale(1.8)] !text-[3vh]">delete_sweep</span>
                 </div>
             </div>
         </div>
     )
-}
+});
 
 export default SingleDrink;
