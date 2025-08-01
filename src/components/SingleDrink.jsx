@@ -1,6 +1,6 @@
 import { useRef, useState, forwardRef, useImperativeHandle } from "react";
 
-const SingleDrink = forwardRef(({ drink, killDrink }, ref) => {
+const SingleDrink = forwardRef(({ drink, killDrink, showLists }, ref) => {
 
     const [showInstructions, setShowInstructions] = useState(false);
     const scrollRef = useRef(null);
@@ -14,11 +14,15 @@ const SingleDrink = forwardRef(({ drink, killDrink }, ref) => {
     }));
 
     const handleClick = (isFavorite) => {
-        if(!disabled) {
+        if (!disabled) {
             setDisabled(true);
-            if(isFavorite) killDrink(true, drink.id);
+            if (isFavorite) killDrink(true, drink.id);
             else killDrink(false, drink.id);
         }
+    }
+
+    const handleListAdd = () => {
+        showLists(true);
     }
 
     const toggleInstructions = () => {
@@ -41,7 +45,10 @@ const SingleDrink = forwardRef(({ drink, killDrink }, ref) => {
             <div ref={scrollRef} className="relative overflow-y-auto overflow-x-hidden h-[calc(80vh-24vw)] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-800 [&::-webkit-scrollbar-thumb]:bg-gray-600">
 
                 <div style={showInstructions ? { transform: "translateX(-100%)" } : undefined} className="p-4 h-fit transition-transform">
-                    <h1 className="text-white text-2xl font-bold border-b-solid border-b-2 border-b-slate-600 !pb-2">{drink.name}</h1>
+                    <div className="w-full flex justify-between items-center border-b-solid border-b-2 border-b-slate-600 !pb-2">
+                        <h1 className="text-white text-2xl font-bold">{drink.name}</h1>
+                        <span onClick={() => {handleListAdd()}} className="material-symbols-outlined cursor-pointer select-none transition-[rotate,color] ease-in-out hover:rotate-90 hover:text-purple-400">add_circle</span>
+                    </div>
                     <p className="text-gray-300 !mt-2">{drink.category} &bull; IBA: {drink.IBA != null ? drink.IBA : "none"} &bull; {drink.isAlcoholic}</p>
                     <div className="flex gap-2 items-center justify-between !mt-4 flex-wrap">
                         <h2 className="text-white text-xl">Ingredients</h2>
