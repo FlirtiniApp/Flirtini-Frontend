@@ -1,6 +1,11 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
+  const styles = {
+    activeLink: "text-purple-400 hover:text-purple-500 flex items-center gap-3",
+    inactiveLink: "text-gray-300 hover:text-white flex items-center gap-3",
+  }
+
   return (
     <div className="h-[96vh] fixed w-[11vw] min-w-fit flex flex-col justify-between my-[2vh] px-4 border-r-2 border-gray-500">
       <div className="flex items-center gap-2">
@@ -11,44 +16,44 @@ const Sidebar = () => {
       </div>
 
       <div className="flex flex-col gap-6 items-start mt-6 flex-grow justify-center">
-        <Link
+        <NavLink
           to="/explore"
-          className="text-gray-300 hover:text-white flex items-center gap-3"
+          className={({ isActive }) => (isActive ? styles.activeLink : styles.inactiveLink)}
         >
           <span className="material-symbols-outlined">explore</span>
           <p>Explore</p>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/liked"
-          className="text-gray-300 hover:text-white flex items-center gap-3"
+          className={({ isActive }) => (isActive ? styles.activeLink : styles.inactiveLink)}
         >
           <span className="material-symbols-outlined">favorite</span>
           <p>Liked</p>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/compose"
-          className="text-gray-300 hover:text-white flex items-center gap-3"
+          className={({ isActive }) => (isActive ? styles.activeLink : styles.inactiveLink)}
         >
           <span className="material-symbols-outlined">local_bar</span>
           <p>Compose</p>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/todays-choice"
-          className="text-gray-300 hover:text-white flex items-center gap-3"
+          className={({ isActive }) => (isActive ? styles.activeLink : styles.inactiveLink)}
         >
           <span className="material-symbols-outlined">star</span>
           <p>Today's choice</p>
-        </Link>
+        </NavLink>
       </div>
 
       <div>
-        <Link
+        <NavLink
           to="/profile"
-          className="text-gray-300 hover:text-white flex items-center gap-3"
+          className={({ isActive }) => (isActive ? styles.activeLink : styles.inactiveLink)}
         >
           <span className="material-symbols-outlined">person</span>
           <p>Profile</p>
-        </Link>
+        </NavLink>
       </div>
     </div>
   );
