@@ -19,6 +19,7 @@ const Explore = () => {
   const [transitionDrink, setTransitionDrink] = useState(1);
   const [listVisibility, setListVisibility] = useState(false);
   const [listOpacity, setListOpacity] = useState(false);
+  const [listTransform, setListTransform] = useState(false);
 
   const animationVariants = {
     left: "[transform:translateX(-100%)] opacity-0",
@@ -41,6 +42,11 @@ const Explore = () => {
   const listOpacityVariants = {
     true: "opacity-100",
     false: "opacity-0"
+  }
+
+  const listTransformVariants = {
+    true: "",
+    false: "[transform:translateY(10%)]"
   }
 
   const fetchInitialDrinks = async () => {
@@ -116,12 +122,14 @@ const Explore = () => {
       node.addEventListener("transitionend", handleTransitionEnd);
 
       setListOpacity(false);
+      setListTransform(false);
     }
   }
 
   useEffect(() => {
     if (listVisibility) {
       setListOpacity(true);
+      setListTransform(true);
     }
   }, [listVisibility])
 
@@ -151,13 +159,15 @@ const Explore = () => {
 
   return (
     <>
-      <div className={`absolute top-0 left-0 bg-black/50 w-full h-full z-10 transition-[transform,opacity] ${listVisibilityVariants[listVisibility]} ${listOpacityVariants[listOpacity]}`}></div>
+      <div className={`absolute top-0 left-0 bg-black/50 w-full h-full z-10 transition-opacity ${listVisibilityVariants[listVisibility]} ${listOpacityVariants[listOpacity]}`}></div>
       <div className="w-full h-full flex justify-center items-center relative">
         <div ref={drinkRef} className={`w-fit h-fit ${transitionDrinkVariants[transitionDrink]} ease-in-out duration-500 ${animationVariants[animateDrink]}`}>
           {drinks[0] && <SingleDrink ref={drinkComponentRef} drink={drinks[0]} killDrink={killDrink} showLists={toggleLists} />}
         </div>
-        <div ref={listRef} className={`absolute top-0 left-0 w-full h-full flex justify-center items-center z-11 transition-[transform,opacity] ${listVisibilityVariants[listVisibility]} ${listOpacityVariants[listOpacity]}`}>
-          <Lists hideLists={toggleLists} />
+        <div ref={listRef} className={`absolute top-0 left-0 w-full h-full flex justify-center items-center z-11 transition-opacity ${listVisibilityVariants[listVisibility]} ${listOpacityVariants[listOpacity]}`}>
+          <div className={`${listTransformVariants[listTransform]} transition-transform`}>
+            <Lists  hideLists={toggleLists} />
+          </div>
         </div>
       </div>
     </>
