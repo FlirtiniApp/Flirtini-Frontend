@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const API_URL = 'http://172.24.3.162:3000';
 
@@ -34,19 +35,19 @@ export default function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    
+
     setIsSubmitting(true);
     setLoginSuccess(false);
 
     try {
-      const response = await axios.post(`${API_URL}/account/login`, credentials, { 
-        withCredentials: true 
+      const response = await axios.post(`${API_URL}/account/login`, credentials, {
+        withCredentials: true
       });
-      
+
       console.log("Login successful:", response.data);
       setLoginSuccess(true);
       setErrors({});
-      
+
     } catch (err) {
       // Handle login error
       const errorMessage = err.response?.data?.message || "Login failed. Please check your credentials.";
@@ -61,11 +62,11 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-6">
-      <form onSubmit={handleSubmit} className="bg-gray-800 text-gray-100 rounded-xl p-6 shadow-lg max-w-md w-full space-y-6 flex flex-col items-center" style={{ minHeight: "400px" }}>
+    <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center">
+      <form onSubmit={handleSubmit} className="bg-gray-800 text-gray-100 rounded-xl p-6 shadow-lg max-w-md w-full gap-y-6 flex flex-col items-center" style={{ minHeight: "400px" }}>
         <div className="text-center">
-          <h1 className="text-3xl font-bold mb-2">Welcome to Flirtini™</h1>
-          <div className="text-lg font-semibold flex items-center justify-center h-8">
+          <p className="text-3xl font-semibold mb-2">Welcome to <span className="font-[Dancing_Script] text-5xl">Flirtini</span></p>
+          <div className="text-lg font-normal flex items-center justify-center h-8 text-gray-300">
             <span className="mr-2">A place with</span>
             <span className="text-purple-400 relative flex items-center justify-center h-8 px-5 min-w-[80px] text-center overflow-hidden rounded-md bg-gray-800">
               {highlights.map((word, index) => (
@@ -78,11 +79,11 @@ export default function LoginForm() {
 
         <div className="w-full space-y-4">
           <div className="relative mx-auto max-w-xs">
-            <input name="login" type="text" value={credentials.login} onChange={handleChange} placeholder="Login" autoFocus className={`w-full p-3 rounded-md bg-gray-700 border ${errors.login ? "border-red-500" : "border-gray-600"} focus:outline-none focus:ring-2 focus:ring-purple-500 text-center`}/>
+            <input name="login" type="text" value={credentials.login} onChange={handleChange} placeholder="Login" autoFocus className={`w-full p-3 rounded-md bg-gray-700 border ${errors.login ? "border-red-500" : "border-gray-600"} focus:outline-none focus:ring-2 focus:ring-purple-500 text-center`} />
             {errors.login && <p className="text-red-400 text-sm mt-1 text-center">{errors.login}</p>}
           </div>
           <div className="relative mx-auto max-w-xs">
-            <input name="password" type="password" value={credentials.password} onChange={handleChange} placeholder="Password" className={`w-full p-3 rounded-md bg-gray-700 border ${errors.password ? "border-red-500" : "border-gray-600"} focus:outline-none focus:ring-2 focus:ring-purple-500 text-center`}/>
+            <input name="password" type="password" value={credentials.password} onChange={handleChange} placeholder="Password" className={`w-full p-3 rounded-md bg-gray-700 border ${errors.password ? "border-red-500" : "border-gray-600"} focus:outline-none focus:ring-2 focus:ring-purple-500 text-center`} />
             {errors.password && <p className="text-red-400 text-sm mt-1 text-center">{errors.password}</p>}
           </div>
           {errors.form && (
@@ -90,10 +91,10 @@ export default function LoginForm() {
           )}
         </div>
 
-        <button 
-          type="submit" 
-          disabled={isSubmitting} 
-          className="bg-purple-400 hover:bg-purple-500 text-white py-3 px-6 rounded-md transition-transform duration-200 hover:scale-105 mt-auto"
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-purple-400 hover:bg-purple-500 text-white py-3 px-6 rounded-md transition-transform duration-200 hover:scale-105 mt-auto cursor-pointer"
         >
           {isSubmitting ? (
             <span className="flex items-center justify-center">
@@ -105,7 +106,7 @@ export default function LoginForm() {
             </span>
           ) : "Login"}
         </button>
-        <div className="mt-4 text-gray-400 text-center text-sm font-medium">Not a member? Register here</div>
+        <div className="mt-4 text-gray-400 text-center text-sm font-light">Not a member? <Link className="text-purple-500 hover:underline" to="/register">Register here</Link></div>
       </form>
     </div>
   );
