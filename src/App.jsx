@@ -44,9 +44,9 @@ function Layout() {
       });
   }
 
-  useEffect(() => {
-    isLogged();
-  }, [path]);
+  // useEffect(() => {
+  //   isLogged();
+  // }, [path]);
 
   return (
     <div className="flex h-screen bg-gray-900 text-white">
