@@ -14,9 +14,13 @@ const RegisterForm = lazy(() => import("./components/RegistrationForm"));
 const LoginForm = lazy(() => import("./components/LoginForm"));
 
 function Layout() {
+  const ACCOUNT_API_URL = "http://192.168.1.88:3000";
+  
+  const token = localStorage.getItem("token");
+
   const location = useLocation();
   const path = location.pathname;
-
+  
   const showSidebar = [
     "/explore",
     "/liked",
@@ -25,9 +29,13 @@ function Layout() {
     "/",
     // jak jakaś ścieżka ma nie mieć sidebara to wystarczy jej tu NIE WPISAĆ
   ].includes(path);
-
+  
   const isLogged = () => {
-    axios.post("http://172.24.3.162:3000/account/logged", { withCredentials: true })
+    axios.post(`${ACCOUNT_API_URL}/account/logged`, { withCredentials: true }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then(response => {
         console.log("User is logged in:", response.data);
       })

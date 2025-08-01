@@ -4,6 +4,9 @@ import SingleDrink from "../components/SingleDrink";
 
 const Explore = () => {
 
+  const ALCOHOL_API_URL = "http://192.168.1.105:3000/alcohol";
+  const LISTS_API_URL = "http://172.24.3.238:3000";
+
   const drinkRef = useRef(null);
   const drinkComponentRef = useRef(null);
 
@@ -33,7 +36,7 @@ const Explore = () => {
 
   const fetchSingleDrink = async () => {
     try {
-      const response = await axios.get(`http://172.24.3.60:3000/alcohol/randomdrink`);
+      const response = await axios.get(`${ALCOHOL_API_URL}/randomdrink`);
       const drink = response.data;
       setDrinks(prev => [...prev, drink]);
     }
@@ -44,7 +47,7 @@ const Explore = () => {
 
   const postSingleDrink = async (drinkId) => {
     try {
-      const response = await axios.post("http://172.24.3.238:3000/favourite", { drinkId: Number(drinkId), userId: "688c7827ec7103b70f5b9810" });
+      const response = await axios.post(`${LISTS_API_URL}/favourite`, { drinkId: Number(drinkId), userId: "688c7827ec7103b70f5b9810" });
       console.log("Drink successfully added to favourites");
     } catch (error) {
       console.error("Error", error);
