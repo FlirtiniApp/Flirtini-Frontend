@@ -11,11 +11,14 @@ const Explore = () => {
   const drinkRef = useRef(null);
   const drinkComponentRef = useRef(null);
 
+  const listRef = useRef(null);
+
   const [drinks, setDrinks] = useState([]);
 
   const [animateDrink, setAnimateDrink] = useState("none");
   const [transitionDrink, setTransitionDrink] = useState(1);
   const [listVisibility, setListVisibility] = useState(false);
+  const [listOpacity, setListOpacity] = useState(false);
 
   const animationVariants = {
     left: "[transform:translateX(-100%)] opacity-0",
@@ -33,6 +36,11 @@ const Explore = () => {
   const listVisibilityVariants = {
     true: "block",
     false: "hidden"
+  }
+
+  const listOpacityVariants = {
+    true: "opacity-100",
+    false: "opacity-0"
   }
 
   const fetchInitialDrinks = async () => {
@@ -89,15 +97,33 @@ const Explore = () => {
   }
 
   const toggleLists = (show) => {
-    if(show) {
-      console.log("showing");
+    if (show) {
       setListVisibility(true);
     }
     else {
-      console.log("hiding");
-      setListVisibility(false);
+
+      const node = listRef.current;
+
+      const handleTransitionEnd = (e) => {
+        if (e.target !== node) return;
+
+
+        node.removeEventListener("transitionend", handleTransitionEnd);
+
+        setListVisibility(false);
+      };
+
+      node.addEventListener("transitionend", handleTransitionEnd);
+
+      setListOpacity(false);
     }
   }
+
+  useEffect(() => {
+    if (listVisibility) {
+      setListOpacity(true);
+    }
+  }, [listVisibility])
 
   useEffect(() => {
     if (animateDrink === "preview") {
@@ -125,13 +151,13 @@ const Explore = () => {
 
   return (
     <>
-      <div className={`absolute top-0 left-0 bg-black/50 w-full h-full z-10 ${listVisibilityVariants[listVisibility]}`}></div>
+      <div className={`absolute top-0 left-0 bg-black/50 w-full h-full z-10 transition-[transform,opacity] ${listVisibilityVariants[listVisibility]} ${listOpacityVariants[listOpacity]}`}></div>
       <div className="w-full h-full flex justify-center items-center relative">
         <div ref={drinkRef} className={`w-fit h-fit ${transitionDrinkVariants[transitionDrink]} ease-in-out duration-500 ${animationVariants[animateDrink]}`}>
           {drinks[0] && <SingleDrink ref={drinkComponentRef} drink={drinks[0]} killDrink={killDrink} showLists={toggleLists} />}
         </div>
-        <div className={`absolute top-0 left-0 w-full h-full flex justify-center items-center z-11 ${listVisibilityVariants[listVisibility]}`}>
-          <Lists hideLists={toggleLists}/>
+        <div ref={listRef} className={`absolute top-0 left-0 w-full h-full flex justify-center items-center z-11 transition-[transform,opacity] ${listVisibilityVariants[listVisibility]} ${listOpacityVariants[listOpacity]}`}>
+          <Lists hideLists={toggleLists} />
         </div>
       </div>
     </>

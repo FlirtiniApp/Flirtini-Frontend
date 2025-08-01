@@ -18,15 +18,20 @@ const Lists = ({ hideLists }) => {
         }
     }
 
+    const handleListClose = () => {
+        hideLists(false);
+        newListInput.current.value = "";
+    }
+
     return (
         <div className="p-4 bg-slate-800 w-[40vw] rounded-xl">
             <div className="flex justify-between items-center border-b-2 border-b-slate-400 !pb-2">
                 <h1 className="text-xl font-semibold">Your Lists</h1>
-                <span onClick={() => {hideLists(false)}} className="material-symbols-outlined select-none cursor-pointer hover:text-purple-400 transition-colors">close</span>
+                <span onClick={() => { handleListClose() }} className="material-symbols-outlined select-none cursor-pointer hover:text-purple-400 transition-[rotate,color] ease-in-out hover:rotate-90">close</span>
             </div>
             <div className="mt-6">
                 <div className="w-full flex justify-between items-center gap-2 my-2 last:mb-0 first:mt-0 border-b-2 border-b-slate-600 pb-2 last:border-none">
-                    <input onInput={() => {handleInput()}} className="bg-transparent placeholder:italic outline-none flex-1 text-gray-300" placeholder="New list..." ref={newListInput}></input>
+                    <input onInput={() => { handleInput() }} className="bg-transparent placeholder:italic outline-none flex-1 text-gray-300" placeholder="New list..." ref={newListInput}></input>
                     <span className={`material-symbols-outlined ${newListButtonStyles[newListButtonActiveStyle]} select-none transition-[rotate,color] ease-in-out`}>add_circle</span>
                 </div>
 
