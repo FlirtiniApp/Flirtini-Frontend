@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const API_URL = 'http://172.24.3.162:3000';
 
@@ -47,27 +48,27 @@ export default function RegistrationForm() {
 
   const validateStep = () => {
     const newErrors = {};
-    
+
     if (step === 2) {
       if (!form.firstname.trim()) newErrors.firstname = "First name is required";
       else if (form.firstname.length < 2 || form.firstname.length > 30)
         newErrors.firstname = "First name must be 2-30 characters";
-      
+
       if (!form.lastname.trim()) newErrors.lastname = "Last name is required";
       else if (form.lastname.length < 2 || form.lastname.length > 30)
         newErrors.lastname = "Last name must be 2-30 characters";
     }
-  
+
     if (step === 3) {
       if (!form.login.trim()) newErrors.login = "Login is required";
       else if (form.login.length < 4 || form.login.length > 20)
         newErrors.login = "Login must be 4-20 characters";
-    
+
       if (!form.password.trim()) newErrors.password = "Password is required";
       else if (form.password.length < 6)
         newErrors.password = "Password must be at least 6 characters";
     }
-  
+
     if (step === 4) {
       if (!form.birthday.trim()) newErrors.birthday = "Birthday is required";
       else if (!isAdult(form.birthday)) newErrors.birthday = "You must be at least 18 years old";
@@ -94,7 +95,7 @@ export default function RegistrationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateStep()) return;
-    
+
     setSubmitError("");
     setIsSubmitting(true);
 
@@ -134,10 +135,10 @@ export default function RegistrationForm() {
         ))}
       </div>
       <div className="flex gap-3">
-        <button type="button" onClick={prevStep} className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-3 px-4 rounded-md font-medium transition-transform duration-200 hover:scale-[1.02]">
+        <button type="button" onClick={prevStep} className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-3 px-4 rounded-md font-medium border-solid border-2 border-gray-600 transition-[transform background-color] duration-200 hover:scale-[1.02] cursor-pointer">
           Back
         </button>
-        <button type="submit" disabled={isSubmitting} className="flex-1 bg-purple-400 hover:bg-purple-500 text-white py-3 px-4 rounded-md font-medium transition-transform duration-200 hover:scale-[1.02]">
+        <button type="submit" disabled={isSubmitting} className="flex-1 bg-purple-400 hover:bg-purple-500 text-white border-solid border-2 border-purple-400 hover:border-purple-500 py-3 px-4 rounded-md font-medium transition-[transform background-color border-color] duration-200 hover:scale-[1.02] cursor-pointer">
           {isSubmitting ? 'Processing...' : 'Complete'}
         </button>
       </div>
@@ -146,7 +147,7 @@ export default function RegistrationForm() {
 
   return (
     <div className="bg-gray-900 min-h-screen flex items-center justify-center p-6">
-      <form onSubmit={handleSubmit} className="bg-gray-800 text-gray-100 rounded-xl p-6 shadow-lg max-w-lg w-full space-y-6 flex flex-col" style={{ minHeight: "400px" }}>
+      <form onSubmit={handleSubmit} className="bg-gray-800 text-gray-100 rounded-xl p-6 shadow-lg max-w-lg w-full flex flex-col min-h-[400px]">
         {step > 1 && (
           <>
             <div className="w-full bg-gray-700 rounded-full h-4 overflow-hidden mb-2 animate-pulse-slow">
@@ -158,14 +159,17 @@ export default function RegistrationForm() {
           </>
         )}
 
-        <div key={step} className="transition-opacity duration-500 ease-in-out flex-grow flex flex-col justify-center">
+        <div key={step} className="h-full transition-opacity duration-500 ease-in-out flex-grow flex flex-col justify-center">
           {step === 1 && (
-            <div className="flex flex-col items-center justify-center gap-4 animate-fade-in-up">
-              <p className="text-3xl font-semibold mb-2">Welcome to <span className="font-[Dancing_Script] text-5xl">Flirtini</span></p>
-              <p className="text-lg font-normal mb-6 text-gray-300">A perfect place to find your drink</p>
-              <button type="button" onClick={nextStep} className="mt-4 bg-purple-400 hover:bg-purple-500 text-white py-3 px-6 rounded-md font-semibold transition-[transform background-color] duration-200 hover:scale-105 cursor-pointer">
-                Continue
-              </button>
+            <div className="flex-1 flex flex-col items-center justify-center animate-fade-in-up">
+              <div className="flex-1 flex flex-col items-center justify-center gap-4">
+                <p className="text-3xl font-semibold">Welcome to <span className="font-[Dancing_Script] text-5xl">Flirtini</span></p>
+                <p className="text-lg font-normal text-gray-300">A perfect place to find your drink</p>
+                <button type="button" onClick={nextStep} className="bg-purple-400 hover:bg-purple-500 text-white py-3 px-6 rounded-md font-semibold transition-[transform background-color] duration-200 hover:scale-105 cursor-pointer">
+                  Continue
+                </button>
+              </div>
+              <p className="text-gray-400 text-sm font-light">Already a member? <Link className="text-purple-500 hover:underline" to="/login">Log in here.</Link></p>
             </div>
           )}
 
@@ -185,7 +189,7 @@ export default function RegistrationForm() {
 
           {step === 4 && (
             <div className="space-y-4 animate-fade-in">
-              <InputField name="birthday" type="date" value={form.birthday} onChange={handleChange} error={errors.birthday} placeholder="Birthday" autoFocus 
+              <InputField name="birthday" type="date" value={form.birthday} onChange={handleChange} error={errors.birthday} placeholder="Birthday" autoFocus
                 max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]} />
               <div className="flex gap-4">
                 <InputField name="email" type="email" value={form.email} onChange={handleChange} error={errors.email} placeholder="Email" />

@@ -44,8 +44,8 @@ const Explore = () => {
 
   const postSingleDrink = async (drinkId) => {
     try {
-      const response = await axios.post("http://172.24.3.238:3000/users", { drinkId: Number(drinkId), userId: "688c7827ec7103b70f5b9810" });
-      console.log("Success");
+      const response = await axios.post("http://172.24.3.238:3000/favourite", { drinkId: Number(drinkId), userId: "688c7827ec7103b70f5b9810" });
+      console.log("Drink successfully added to favourites");
     } catch (error) {
       console.error("Error", error);
     }

@@ -106,7 +106,7 @@ export default function LoginForm() {
             </span>
           ) : "Login"}
         </button>
-        <div className="mt-4 text-gray-400 text-center text-sm font-light">Not a member? <Link className="text-purple-500 hover:underline" to="/register">Register here</Link></div>
+        <div className="mt-4 text-gray-400 text-center text-sm font-light">Not a member? <Link className="text-purple-500 hover:underline" to="/register">Register here.</Link></div>
       </form>
     </div>
   );
