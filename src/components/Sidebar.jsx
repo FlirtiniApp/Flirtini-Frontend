@@ -1,9 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const styles = {
     activeLink: "text-purple-400 hover:text-purple-500 flex items-center gap-3",
     inactiveLink: "text-gray-300 hover:text-white flex items-center gap-3",
+  }
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+      localStorage.removeItem("token");
+      navigate("/login");
   }
 
   return (
@@ -54,6 +61,13 @@ const Sidebar = () => {
           <span className="material-symbols-outlined">person</span>
           <p>Profile</p>
         </NavLink>
+        <button
+          onClick={logout}
+          className="text-gray-300 hover:text-white flex items-center gap-3 mt-6 cursor-pointer"
+        >
+          <span className="material-symbols-outlined">logout</span>
+          <p>Logout</p>
+        </button>
       </div>
     </div>
   );
