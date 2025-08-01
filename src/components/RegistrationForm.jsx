@@ -104,6 +104,7 @@ export default function RegistrationForm() {
     } catch (err) {
       setSubmitError(err.response?.data?.message || "Registration failed. Please try again.");
     } finally {
+      localStorage.setItem("token", response.data.token);
       setIsSubmitting(false);
     }
   };

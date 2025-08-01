@@ -47,6 +47,7 @@ export default function LoginForm() {
       console.log("Login successful:", response.data);
       setLoginSuccess(true);
       setErrors({});
+      localStorage.setItem("token", response.data.token);
 
     } catch (err) {
       // Handle login error
