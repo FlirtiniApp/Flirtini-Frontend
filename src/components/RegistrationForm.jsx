@@ -100,7 +100,6 @@ export default function RegistrationForm() {
 
     try {
       await axios.post(`${API_URL}/account/register`, form, { withCredentials: true });
-      alert("Registration successful!");
     } catch (err) {
       setSubmitError(err.response?.data?.message || "Registration failed. Please try again.");
     } finally {
