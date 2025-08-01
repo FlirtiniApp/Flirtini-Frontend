@@ -26,7 +26,7 @@ const Lists = ({ hideLists }) => {
     return (
         <div className="p-4 bg-slate-800 w-[40vw] rounded-xl">
             <div className="flex justify-between items-center border-b-2 border-b-slate-400 !pb-2">
-                <h1 className="text-xl font-semibold">Your Lists</h1>
+                <h1 className="text-xl font-semibold">Add to list</h1>
                 <span onClick={() => { handleListClose() }} className="material-symbols-outlined select-none cursor-pointer hover:text-purple-400 transition-[rotate,color] ease-in-out hover:rotate-90">close</span>
             </div>
             <div className="mt-6">
