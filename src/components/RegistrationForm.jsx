@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const API_URL = 'http://172.24.3.162:3000';
+const API_URL = 'http://192.168.1.88:3000';
 
 const InputField = ({ name, value, onChange, error, type = "text", placeholder, required = true, ...props }) => (
   <div>
@@ -35,6 +35,8 @@ export default function RegistrationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const progressPercent = Math.round(((step - 1) / 4) * 100);
+
+  const navigate = useNavigate();
 
   const isAdult = (birthday) => {
     if (!birthday) return false;
@@ -100,11 +102,16 @@ export default function RegistrationForm() {
     setIsSubmitting(true);
 
     try {
-      await axios.post(`${API_URL}/account/register`, form, { withCredentials: true });
+      const response = await axios.post(`${API_URL}/account/register`, form, {
+        withCredentials: true
+      });
+
+      setIsSubmitting(true);
+      localStorage.setItem("token", response.data.token);
+      navigate("/explore");
     } catch (err) {
       setSubmitError(err.response?.data?.message || "Registration failed. Please try again.");
     } finally {
-      localStorage.setItem("token", response.data.token);
       setIsSubmitting(false);
     }
   };

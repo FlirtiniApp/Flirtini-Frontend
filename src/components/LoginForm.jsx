@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ACCOUNT_API_URL = 'http://192.168.1.88:3000';
 
@@ -11,6 +11,8 @@ export default function LoginForm() {
   const [highlightIndex, setHighlightIndex] = useState(0);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const highlights = ["perfect", "amazing", "tasty"];
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => setHighlightIndex(prev => (prev + 1) % highlights.length), 3000);
@@ -44,11 +46,10 @@ export default function LoginForm() {
         withCredentials: true
       });
 
-      console.log("Login successful:", response.data);
       setLoginSuccess(true);
       setErrors({});
       localStorage.setItem("token", response.data.token);
-
+      navigate("/explore");
     } catch (err) {
       // Handle login error
       const errorMessage = err.response?.data?.message || "Login failed. Please check your credentials.";
