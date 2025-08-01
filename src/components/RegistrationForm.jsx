@@ -160,10 +160,10 @@ export default function RegistrationForm() {
 
         <div key={step} className="transition-opacity duration-500 ease-in-out flex-grow flex flex-col justify-center">
           {step === 1 && (
-            <div className="text-center animate-fade-in-up">
-              <p className="text-2xl font-extrabold mb-2">Welcome to Flirtinii™</p>
-              <p className="text-lg font-semibold mb-6">A perfect place to find your drink</p>
-              <button type="button" onClick={nextStep} className="mt-4 bg-purple-400 hover:bg-purple-500 text-white py-3 px-6 rounded-md font-semibold transition-transform duration-200 hover:scale-105">
+            <div className="flex flex-col items-center justify-center gap-4 animate-fade-in-up">
+              <p className="text-3xl font-semibold mb-2">Welcome to <span className="font-[Dancing_Script] text-5xl">Flirtini</span></p>
+              <p className="text-lg font-normal mb-6 text-gray-300">A perfect place to find your drink</p>
+              <button type="button" onClick={nextStep} className="mt-4 bg-purple-400 hover:bg-purple-500 text-white py-3 px-6 rounded-md font-semibold transition-[transform background-color] duration-200 hover:scale-105 cursor-pointer">
                 Continue
               </button>
             </div>
@@ -201,12 +201,12 @@ export default function RegistrationForm() {
 
         <div className="flex justify-between items-center">
           {step > 1 && step < 5 && (
-            <button type="button" onClick={prevStep} className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-md transition-transform duration-200 hover:scale-105">
+            <button type="button" onClick={prevStep} className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-md transition-[transform background-color] duration-200 hover:scale-105 cursor-pointer">
               Back
             </button>
           )}
           {step < 5 && step !== 1 && (
-            <button type="button" onClick={nextStep} className="bg-purple-400 hover:bg-purple-500 text-white py-2 px-4 rounded-md ml-auto transition-transform duration-200 hover:scale-105">
+            <button type="button" onClick={nextStep} className="bg-purple-400 hover:bg-purple-500 text-white py-2 px-4 rounded-md ml-auto transition-[transform background-color] duration-200 hover:scale-105 cursor-pointer">
               Next
             </button>
           )}
