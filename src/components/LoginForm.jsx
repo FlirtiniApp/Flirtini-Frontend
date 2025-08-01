@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const API_URL = 'http://172.24.3.162:3000';
+const ACCOUNT_API_URL = 'http://192.168.1.88:3000';
 
 export default function LoginForm() {
   const [credentials, setCredentials] = useState({ login: "", password: "" });
@@ -40,7 +40,7 @@ export default function LoginForm() {
     setLoginSuccess(false);
 
     try {
-      const response = await axios.post(`${API_URL}/account/login`, credentials, {
+      const response = await axios.post(`${ACCOUNT_API_URL}/account/login`, credentials, {
         withCredentials: true
       });
 
