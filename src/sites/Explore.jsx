@@ -5,7 +5,7 @@ import Lists from "../components/Lists";
 
 const Explore = () => {
 
-  const ALCOHOL_API_URL = "https://localhost:3000/alcohol";
+  const ALCOHOL_API_URL = "https://192.168.1.105:3000/alcohol";
   const LISTS_API_URL = "http://192.168.1.98:3000";
 
   const drinkRef = useRef(null);
