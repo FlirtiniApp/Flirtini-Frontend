@@ -3,6 +3,9 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
+
+  const ACCOUNT_API_URL = "https://192.168.1.88:3000";
+
   const [credentials, setCredentials] = useState({ login: "", password: "" });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,7 +43,7 @@ export default function LoginForm() {
     setLoginSuccess(false);
 
     try {
-      const response = await axios.post(`https://192.168.1.88:3000/account/login`, credentials, {
+      const response = await axios.post(`${ACCOUNT_API_URL}/account/login`, credentials, {
         withCredentials: true
       });
 

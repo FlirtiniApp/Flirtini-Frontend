@@ -5,6 +5,7 @@ import Lists from "../components/Lists";
 
 const Explore = () => {
 
+  const ALCOHOL_API_URL = "https://192.168.1.105:3000";
   const LISTS_API_URL = "http://192.168.1.98:3000";
 
   const drinkRef = useRef(null);
@@ -56,7 +57,7 @@ const Explore = () => {
 
   const fetchSingleDrink = async () => {
     try {
-      const response = await axios.get(`/alcoholAPI/alcohol/randomdrink`);
+      const response = await axios.get(`${ALCOHOL_API_URL}/alcohol/randomdrink`);
       const drink = response.data;
       setDrinks(prev => [...prev, drink]);
     }
