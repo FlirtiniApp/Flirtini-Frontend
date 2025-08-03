@@ -12,6 +12,7 @@ const TodaysChoice = lazy(() => import("./sites/TodaysChoice"));
 const Profile = lazy(() => import("./sites/Profile"));
 const RegisterForm = lazy(() => import("./components/RegistrationForm"));
 const LoginForm = lazy(() => import("./components/LoginForm"));
+const BarFinder = lazy(() => import("./components/BarFinder"));
 
 function Layout() {
   const ACCOUNT_API_URL = "http://192.168.1.88:3000";
@@ -27,6 +28,7 @@ function Layout() {
     "/compose",
     "/todays-choice",
     "/",
+    "/find-bar"
     // jak jakaś ścieżka ma nie mieć sidebara to wystarczy jej tu NIE WPISAĆ
   ].includes(path);
   
@@ -62,6 +64,7 @@ function Layout() {
             <Route path="/profile" element={<Profile />} />
             <Route path="register" element={<RegisterForm />} />
             <Route path="login" element={<LoginForm />} />
+            <Route path="/find-bar" element={<BarFinder />} />
           </Routes>
         </Suspense>
       </main>

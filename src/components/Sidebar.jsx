@@ -9,8 +9,8 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-      localStorage.removeItem("token");
-      navigate("/login");
+    localStorage.removeItem("token");
+    navigate("/login");
   }
 
   return (
@@ -50,6 +50,13 @@ const Sidebar = () => {
         >
           <span className="material-symbols-outlined">star</span>
           <p>Today's choice</p>
+        </NavLink>
+        <NavLink
+          to="/find-bar"
+          className={({ isActive }) => (isActive ? styles.activeLink : styles.inactiveLink)}
+        >
+          <span className="material-symbols-outlined">map_search</span>
+          <p>Find bars</p>
         </NavLink>
       </div>
 
