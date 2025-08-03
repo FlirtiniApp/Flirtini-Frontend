@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const API_URL = 'http://192.168.1.88:3000';
+const API_URL = 'https://192.168.1.88:3000';
 
 const InputField = ({ name, value, onChange, error, type = "text", placeholder, required = true, ...props }) => (
   <div>
