@@ -10,9 +10,9 @@ const Liked = lazy(() => import("./sites/Liked"));
 const Compose = lazy(() => import("./sites/Compose"));
 const TodaysChoice = lazy(() => import("./sites/TodaysChoice"));
 const Profile = lazy(() => import("./sites/Profile"));
-const RegisterForm = lazy(() => import("./components/RegistrationForm"));
-const LoginForm = lazy(() => import("./components/LoginForm"));
-const BarFinder = lazy(() => import("./components/BarFinder"));
+const RegisterForm = lazy(() => import("./sites/RegistrationForm"));
+const LoginForm = lazy(() => import("./sites/LoginForm"));
+const BarFinder = lazy(() => import("./sites/BarFinder"));
 
 function Layout() {
   const ACCOUNT_API_URL = "http://192.168.1.88:3000";
