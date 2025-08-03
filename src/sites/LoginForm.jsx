@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const ACCOUNT_API_URL = 'http://192.168.1.88:3000';
-
 export default function LoginForm() {
   const [credentials, setCredentials] = useState({ login: "", password: "" });
   const [errors, setErrors] = useState({});
@@ -42,7 +40,7 @@ export default function LoginForm() {
     setLoginSuccess(false);
 
     try {
-      const response = await axios.post(`${ACCOUNT_API_URL}/account/login`, credentials, {
+      const response = await axios.post(`/accountsAPI/account/login`, credentials, {
         withCredentials: true
       });
 
