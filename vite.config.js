@@ -6,20 +6,20 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: '/Flirtini-Frontend/',
-  server: {
-    proxy: {
-      '/alcoholAPI': {
-        target: 'https://192.168.1.105:3000',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/alcoholAPI/, ''),
-      },
-      '/accountsAPI': {
-        target: 'https://192.168.1.88:3000',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/accountsAPI/, ''),
-      },
-    }
-  }
+  // server: {
+  //   proxy: {
+  //     '/alcoholAPI': {
+  //       target: 'https://192.168.1.105:3000',
+  //       changeOrigin: true,
+  //       secure: false,
+  //       rewrite: (path) => path.replace(/^\/alcoholAPI/, ''),
+  //     },
+  //     '/accountsAPI': {
+  //       target: 'https://192.168.1.88:3000',
+  //       changeOrigin: true,
+  //       secure: false,
+  //       rewrite: (path) => path.replace(/^\/accountsAPI/, ''),
+  //     },
+  //   }
+  // }
 })
