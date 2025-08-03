@@ -40,7 +40,7 @@ export default function LoginForm() {
     setLoginSuccess(false);
 
     try {
-      const response = await axios.post(`/accountsAPI/account/login`, credentials, {
+      const response = await axios.post(`https://192.168.1.88:3000/account/login`, credentials, {
         withCredentials: true
       });
 
