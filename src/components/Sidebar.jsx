@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const styles = {
@@ -6,10 +6,17 @@ const Sidebar = () => {
     inactiveLink: "text-gray-300 hover:text-white flex items-center gap-3",
   }
 
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+
   return (
     <div className="h-[96vh] fixed w-[11vw] min-w-fit flex flex-col justify-between my-[2vh] px-4 border-r-2 border-gray-500">
       <div className="flex items-center gap-2">
-        <img className="w-[50px]" src="/Flirtini/logo.png" alt="Flirtini Logo" />
+        <img className="w-[50px]" src="/Flirtini-Frontend/logo.png" alt="Flirtini Logo" />
         <h1 className="text-white text-2xl font-bold font-[Dancing_Script]">
           Flirtini
         </h1>
@@ -44,6 +51,13 @@ const Sidebar = () => {
           <span className="material-symbols-outlined">star</span>
           <p>Today's choice</p>
         </NavLink>
+        <NavLink
+          to="/find-bar"
+          className={({ isActive }) => (isActive ? styles.activeLink : styles.inactiveLink)}
+        >
+          <span className="material-symbols-outlined">map_search</span>
+          <p>Find bars</p>
+        </NavLink>
       </div>
 
       <div>
@@ -54,6 +68,13 @@ const Sidebar = () => {
           <span className="material-symbols-outlined">person</span>
           <p>Profile</p>
         </NavLink>
+        <button
+          onClick={logout}
+          className="text-gray-300 hover:text-white flex items-center gap-3 mt-6 cursor-pointer"
+        >
+          <span className="material-symbols-outlined">logout</span>
+          <p>Logout</p>
+        </button>
       </div>
     </div>
   );
