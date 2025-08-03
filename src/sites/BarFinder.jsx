@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://192.168.1.115:3000';
 
 export default function BarFinder() {
   const [location, setLocation] = useState(null);
