@@ -14,11 +14,15 @@ const DrinkListView = () => {
   const ALCOHOL_API_URL = "https://172.24.3.60:3000";
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
     const fetchListAndDrinks = async () => {
       try {
-        const listResponse = await axios.get(
-          `${LISTS_API_URL}/lists/68906481698ac52a9e4b5a56`
-        );
+        const listResponse = await axios.get(`${LISTS_API_URL}/lists`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         const matchedList = listResponse.data.find(
           (list) => list.name === name

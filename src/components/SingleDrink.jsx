@@ -63,15 +63,17 @@ const SingleDrink = forwardRef(
           >
             <div className="w-full flex justify-between items-center border-b-solid border-b-2 border-b-slate-600 !pb-2">
               <h1 className="text-white text-2xl font-bold">{drink.name}</h1>
-              <span
-                onClick={() => {
-                  handleListAdd();
-                }}
-                className="material-symbols-outlined cursor-pointer select-none transition-[rotate,color] ease-in-out hover:rotate-90 hover:text-purple-400"
-              >
-                add_circle
-              </span>
+
+              {!isAdded && (
+                <span
+                  onClick={handleListAdd}
+                  className="material-symbols-outlined cursor-pointer select-none transition-[rotate,color] ease-in-out hover:rotate-90 hover:text-purple-400"
+                >
+                  add_circle
+                </span>
+              )}
             </div>
+
             <p className="text-gray-300 !mt-2">
               {drink.category} &bull; IBA:{" "}
               {drink.IBA != null ? drink.IBA : "none"} &bull;{" "}
