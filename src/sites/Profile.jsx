@@ -29,13 +29,21 @@ const Profile = () => {
 
   // Ładowanie list użytkownika
   const loadLists = async () => {
+    const token = localStorage.getItem("token");
+
     try {
-      const response = await axios.get(
-        "http://172.24.3.84:6969/lists/68906481698ac52a9e4b5a56"
-      );
-      setLists(response.data);
+      await axios
+        .get("http://172.24.3.84:6969/lists", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => response.data)
+        .then((data) => {
+          setLists(data);
+        });
     } catch (err) {
-      console.error("Failed to fetch lists:", err);
+      console.error(err);
     }
   };
 
@@ -111,7 +119,7 @@ const Profile = () => {
       </div>
 
       {/* Sekcja z listami */}
-      <div className="h-screen w-full p-7 border-t border-white" id="lists">
+      <div className="w-full p-7 border-t border-white" id="lists">
         <div className="flex flex-row flex-wrap justify-center gap-4">
           {lists.length > 0 ? (
             lists.map((list, index) => (

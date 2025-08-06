@@ -9,7 +9,6 @@ import LoggedInRoute from "./components/LoggedInRoute";
 
 const Explore = lazy(() => import("./sites/Explore"));
 const Liked = lazy(() => import("./sites/Liked"));
-const Compose = lazy(() => import("./sites/Compose"));
 const TodaysChoice = lazy(() => import("./sites/TodaysChoice"));
 const Profile = lazy(() => import("./sites/Profile"));
 const BarFinder = lazy(() => import("./sites/BarFinder"));
@@ -87,14 +86,6 @@ function Layout() {
               element={
                 <ProtectedRoute>
                   <Liked />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/compose"
-              element={
-                <ProtectedRoute>
-                  <Compose />
                 </ProtectedRoute>
               }
             />

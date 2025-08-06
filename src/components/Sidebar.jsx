@@ -46,15 +46,6 @@ const Sidebar = () => {
           <p>Liked</p>
         </NavLink>
         <NavLink
-          to="/compose"
-          className={({ isActive }) =>
-            isActive ? styles.activeLink : styles.inactiveLink
-          }
-        >
-          <span className="material-symbols-outlined">local_bar</span>
-          <p>Compose</p>
-        </NavLink>
-        <NavLink
           to="/todays-choice"
           className={({ isActive }) =>
             isActive ? styles.activeLink : styles.inactiveLink
