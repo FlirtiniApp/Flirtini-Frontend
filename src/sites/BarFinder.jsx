@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const API_URL = 'http://192.168.1.115:3000';
+const API_URL = "http://172.24.3.54:3000";
 
 export default function BarFinder() {
   const [location, setLocation] = useState(null);
@@ -10,7 +10,7 @@ export default function BarFinder() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [gpsError, setGpsError] = useState(false);
-  const [addressInput, setAddressInput] = useState('');
+  const [addressInput, setAddressInput] = useState("");
   const [fetchingLocation, setFetchingLocation] = useState(false);
   const [tempRange, setTempRange] = useState(1);
   const [locationMode, setLocationMode] = useState('gps');
@@ -34,7 +34,10 @@ export default function BarFinder() {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+        setLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
         setLoading(false);
       },
       () => {
@@ -51,11 +54,11 @@ export default function BarFinder() {
       try {
         setError(null);
         const response = await axios.get(`${API_URL}/drinks`, {
-          params: { lat: location.lat, lng: location.lng, range: range }
+          params: { lat: location.lat, lng: location.lng, range: range },
         });
         setBars(response.data);
       } catch (err) {
-        setError(err.response?.data?.error || 'Failed to fetch bars');
+        setError(err.response?.data?.error || "Failed to fetch bars");
         setBars([]);
       }
     };
@@ -72,7 +75,10 @@ export default function BarFinder() {
       setError(null);
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+          setLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
           setError(null);
           setFetchingLocation(false);
         },
@@ -87,8 +93,10 @@ export default function BarFinder() {
     setFetchingLocation(true);
     setError(null);
     try {
-      const res = await axios.get(`${API_URL}/geocode`, { params: { address: addressInput } });
-      if (res.data.status === 'OK') {
+      const res = await axios.get(`${API_URL}/geocode`, {
+        params: { address: addressInput },
+      });
+      if (res.data.status === "OK") {
         const loc = res.data.results[0].geometry.location;
         setLocation({ lat: loc.lat, lng: loc.lng });
         setError(null);
