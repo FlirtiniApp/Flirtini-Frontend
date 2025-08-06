@@ -170,6 +170,7 @@ const Explore = () => {
             <SingleDrink
               ref={drinkComponentRef}
               drink={drinks[0]}
+              isAdded={false}
               killDrink={killDrink}
               showLists={toggleLists}
             />

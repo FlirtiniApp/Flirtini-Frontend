@@ -13,6 +13,7 @@ const Compose = lazy(() => import("./sites/Compose"));
 const TodaysChoice = lazy(() => import("./sites/TodaysChoice"));
 const Profile = lazy(() => import("./sites/Profile"));
 const BarFinder = lazy(() => import("./sites/BarFinder"));
+const DrinkListView = lazy(() => import("./sites/DrinkListView"));
 
 const RegisterForm = lazy(() => import("./sites/RegistrationForm"));
 const LoginForm = lazy(() => import("./sites/LoginForm"));
@@ -135,6 +136,14 @@ function Layout() {
                 <LoggedInRoute>
                   <LoginForm />
                 </LoggedInRoute>
+              }
+            />
+            <Route
+              path="/lists/:name"
+              element={
+                <ProtectedRoute>
+                  <DrinkListView />
+                </ProtectedRoute>
               }
             />
           </Routes>
