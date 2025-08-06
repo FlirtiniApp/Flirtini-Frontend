@@ -16,8 +16,8 @@ const SingleDrink = forwardRef(
     const handleClick = (isFavorite) => {
       if (!disabled) {
         setDisabled(true);
-        if (isFavorite) killDrink(true, drink.id);
-        else killDrink(false, drink.id);
+        if (isFavorite) killDrink(true, drink.id, drink.name);
+        else killDrink(false, drink.id, drink.name);
       }
     };
 

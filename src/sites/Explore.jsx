@@ -66,20 +66,34 @@ const Explore = () => {
     }
   };
 
-  const postSingleDrink = async (drinkId) => {
+  const postSingleDrink = async (drinkId, drinkName) => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+
+    const body = {
+      drinkId: Number(drinkId),
+      drinkName: drinkName,
+    }
+
     try {
-      const response = await axios.post(`${LISTS_API_URL}/favourite`, {
-        userId: "68906481698ac52a9e4b5a56",
-        drinkId: Number(drinkId),
-        drinkName: "twojamama, the drink",
-      });
+      await axios.post(`${LISTS_API_URL}/favourite`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials:true,
+        }
+      );
+
       console.log("Drink successfully added to favourites");
     } catch (error) {
       console.error("Error", error);
     }
   };
 
-  const killDrink = (isFavorite, drinkId) => {
+  const killDrink = (isFavorite, drinkId, drinkName) => {
+
     const node = drinkRef.current;
 
     const handleTransitionEnd = (e) => {
@@ -98,7 +112,7 @@ const Explore = () => {
 
     if (isFavorite) {
       setAnimateDrink("left");
-      postSingleDrink(drinkId);
+      postSingleDrink(drinkId, drinkName);
     } else {
       setAnimateDrink("right");
     }
@@ -183,7 +197,7 @@ const Explore = () => {
           <div
             className={`${listTransformVariants[listTransform]} transition-transform`}
           >
-            <Lists hideLists={toggleLists} />
+            <Lists hideLists={toggleLists} currentDrink={drinks[0]} />
           </div>
         </div>
       </div>

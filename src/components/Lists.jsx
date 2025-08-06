@@ -1,6 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
-const Lists = ({ hideLists }) => {
+const Lists = ({ hideLists, currentDrink }) => {
+
+    const LISTS_API_URL = "http://172.24.3.84:6969"
+
+    const [lists, setLists] = useState([]);
 
     const newListInput = useRef(null);
 
@@ -23,6 +28,63 @@ const Lists = ({ hideLists }) => {
         newListInput.current.value = "";
     }
 
+    const addToList = async (listNameGet) => {
+        const token = localStorage.getItem("token");
+
+        console.log(currentDrink);
+        console.log(currentDrink.id);
+        console.log(listNameGet);
+
+        const body = {
+            drinkId: currentDrink.id,
+            listName: listNameGet
+        }
+
+        try {
+            await axios.put("http://172.24.3.84:6969/lists",
+                body,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true,
+                }
+            )
+
+            console.log("successfully added to list")
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    const fetchLists = async () => {
+        const token = localStorage.getItem("token");
+
+        try {
+            await axios.get(
+                `${LISTS_API_URL}/lists`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true,
+                }
+            )
+                .then(response => response.data)
+                .then(data => {
+                    setLists(data);
+                })
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    useEffect(() => {
+        fetchLists();
+    }, []);
+
     return (
         <div className="p-4 bg-slate-800 w-[40vw] rounded-xl">
             <div className="flex justify-between items-center border-b-2 border-b-slate-400 !pb-2">
@@ -35,22 +97,14 @@ const Lists = ({ hideLists }) => {
                     <span className={`material-symbols-outlined ${newListButtonStyles[newListButtonActiveStyle]} select-none transition-[rotate,color] ease-in-out`}>add_circle</span>
                 </div>
 
-                <div className="w-full flex justify-between items-center gap-2 my-2 last:mb-0 first:mt-0 border-b-2 border-b-slate-600 pb-2 last:border-none">
-                    <p className="text-normal text-gray-300">Drinks for tomorrow</p>
-                    <span className="material-symbols-outlined text-slate-300 select-none cursor-pointer hover:text-purple-400 transition-[rotate,color] ease-in-out hover:rotate-90">add_circle</span>
-                </div>
-                <div className="w-full flex justify-between items-center gap-2 my-2 last:mb-0 first:mt-0 border-b-2 border-b-slate-600 pb-2 last:border-none">
-                    <p className="text-normal text-gray-300">Sunday evening</p>
-                    <span className="material-symbols-outlined text-slate-300 select-none cursor-pointer hover:text-purple-400 transition-[rotate,color] ease-in-out hover:rotate-90">add_circle</span>
-                </div>
-                <div className="w-full flex justify-between items-center gap-2 my-2 last:mb-0 first:mt-0 border-b-2 border-b-slate-600 pb-2 last:border-none">
-                    <p className="text-normal text-gray-300">With friends</p>
-                    <span className="material-symbols-outlined text-slate-300 select-none cursor-pointer hover:text-purple-400 transition-[rotate,color] ease-in-out hover:rotate-90">add_circle</span>
-                </div>
-                <div className="w-full flex justify-between items-center gap-2 my-2 last:mb-0 first:mt-0 border-b-2 border-b-slate-600 pb-2 last:border-none">
-                    <p className="text-normal text-gray-300">Miscellanous</p>
-                    <span className="material-symbols-outlined text-slate-300 select-none cursor-pointer hover:text-purple-400 transition-[rotate,color] ease-in-out hover:rotate-90">add_circle</span>
-                </div>
+                {lists?.map((list) => {
+                    return (
+                        <div className="w-full flex justify-between items-center gap-2 my-2 last:mb-0 first:mt-0 border-b-2 border-b-slate-600 pb-2 last:border-none">
+                            <p className="text-normal text-gray-300">{list.name}</p>
+                            <span onClick={() => { addToList(list.name) }} className="material-symbols-outlined text-slate-300 select-none cursor-pointer hover:text-purple-400 transition-[rotate,color] ease-in-out hover:rotate-90">add_circle</span>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     );
