@@ -5,6 +5,8 @@ const Lists = ({ hideLists, currentDrink }) => {
 
     const LISTS_API_URL = "http://172.24.3.84:6969"
 
+    const token = localStorage.getItem("token");
+
     const [lists, setLists] = useState([]);
 
     const newListInput = useRef(null);
@@ -28,12 +30,35 @@ const Lists = ({ hideLists, currentDrink }) => {
         newListInput.current.value = "";
     }
 
-    const addToList = async (listNameGet) => {
-        const token = localStorage.getItem("token");
+    const createListWithDrink = async () => {
 
-        console.log(currentDrink);
-        console.log(currentDrink.id);
-        console.log(listNameGet);
+        if (newListInput.current.value == "") return;
+
+        const body = {
+            name: newListInput.current.value,
+            drinkIds: [Number(currentDrink.id)],
+        }
+        console.log(body);
+
+        try {
+            await axios.post("http://172.24.3.84:6969/listser",
+                body,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true,
+                }
+            )
+
+            console.log("successfully created list with drink.")
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    const addToList = async (listNameGet) => {
 
         const body = {
             drinkId: currentDrink.id,
@@ -51,7 +76,7 @@ const Lists = ({ hideLists, currentDrink }) => {
                 }
             )
 
-            console.log("successfully added to list")
+            console.log("successfully added to list.")
         }
         catch (err) {
             console.error(err);
@@ -94,7 +119,7 @@ const Lists = ({ hideLists, currentDrink }) => {
             <div className="mt-6">
                 <div className="w-full flex justify-between items-center gap-2 my-2 last:mb-0 first:mt-0 border-b-2 border-b-slate-600 pb-2 last:border-none">
                     <input onInput={() => { handleInput() }} className="bg-transparent placeholder:italic outline-none flex-1 text-gray-300" placeholder="New list..." ref={newListInput}></input>
-                    <span className={`material-symbols-outlined ${newListButtonStyles[newListButtonActiveStyle]} select-none transition-[rotate,color] ease-in-out`}>add_circle</span>
+                    <span onClick={() => { createListWithDrink() }} className={`material-symbols-outlined ${newListButtonStyles[newListButtonActiveStyle]} select-none transition-[rotate,color] ease-in-out`}>add_circle</span>
                 </div>
 
                 {lists?.map((list) => {
