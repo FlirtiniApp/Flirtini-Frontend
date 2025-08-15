@@ -18,10 +18,6 @@ const RegisterForm = lazy(() => import("./sites/RegistrationForm"));
 const LoginForm = lazy(() => import("./sites/LoginForm"));
 
 function Layout() {
-  const ACCOUNT_API_URL = "http://192.168.1.88:3000";
-
-  const token = localStorage.getItem("token");
-
   const location = useLocation();
   const path = location.pathname;
 
@@ -35,29 +31,6 @@ function Layout() {
     "/profile",
     // jak jakaś ścieżka ma nie mieć sidebara to wystarczy jej tu NIE WPISAĆ
   ].includes(path);
-
-  const isLogged = () => {
-    axios
-      .post(
-        `${ACCOUNT_API_URL}/account/logged`,
-        { withCredentials: true },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log("User is logged in:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error checking login status:", error);
-      });
-  };
-
-  // useEffect(() => {
-  //   isLogged();
-  // }, [path]);
 
   return (
     <div className="flex h-screen bg-gray-900 text-white">

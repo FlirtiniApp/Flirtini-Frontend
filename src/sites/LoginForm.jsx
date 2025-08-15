@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
-  const ACCOUNT_API_URL = "https://172.24.3.162:3000";
+  const BACKEND_URL = "http://localhost:3000";
 
   const [credentials, setCredentials] = useState({ login: "", password: "" });
   const [errors, setErrors] = useState({});
@@ -47,7 +47,7 @@ export default function LoginForm() {
 
     try {
       const response = await axios.post(
-        `${ACCOUNT_API_URL}/account/login`,
+        `${BACKEND_URL}/user/login`,
         credentials,
         {
           withCredentials: true,

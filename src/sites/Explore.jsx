@@ -4,8 +4,7 @@ import SingleDrink from "../components/SingleDrink";
 import Lists from "../components/Lists";
 
 const Explore = () => {
-  const ALCOHOL_API_URL = "https://172.24.3.60:3000";
-  const LISTS_API_URL = "http://172.24.3.84:6969";
+  const BACKEND_URL = "http://localhost:3000";
 
   const drinkRef = useRef(null);
   const drinkComponentRef = useRef(null);
@@ -57,7 +56,7 @@ const Explore = () => {
   const fetchSingleDrink = async () => {
     try {
       const response = await axios.get(
-        `${ALCOHOL_API_URL}/alcohol/randomdrink`
+        `${BACKEND_URL}/alcohol/getrandomdrink`
       );
       const drink = response.data;
       setDrinks((prev) => [...prev, drink]);
@@ -76,7 +75,7 @@ const Explore = () => {
     }
 
     try {
-      await axios.post(`${LISTS_API_URL}/favourite`,
+      await axios.post(`${BACKEND_URL}/favourite`,
         body,
         {
           headers: {

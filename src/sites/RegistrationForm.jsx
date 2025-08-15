@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const API_URL = 'https://172.24.3.162:3000';
+const BACKEND_URL = 'http://localhost:3000';
 
 const InputField = ({ name, value, onChange, error, type = "text", placeholder, required = true, ...props }) => (
   <div className="flex-1">
@@ -22,11 +22,11 @@ const InputField = ({ name, value, onChange, error, type = "text", placeholder, 
 
 export default function RegistrationForm() {
   const [form, setForm] = useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     login: "",
     password: "",
-    birthday: "",
+    birthDate: "",
     email: "",
     countryCode: "",
     phoneNumber: "",
@@ -40,13 +40,13 @@ export default function RegistrationForm() {
   const navigate = useNavigate();
   const progressPercent = Math.round(((step - 1) / 4) * 100);
 
-  const isAdult = (birthday) => {
-    if (!birthday) return false;
+  const isAdult = (birthDate) => {
+    if (!birthDate) return false;
     const today = new Date();
-    const birthDate = new Date(birthday);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) age--;
+    const birthDateTemp = new Date(birthDate);
+    let age = today.getFullYear() - birthDateTemp.getFullYear();
+    const monthDiff = today.getMonth() - birthDateTemp.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDateTemp.getDate())) age--;
     return age >= 18;
   };
 
@@ -54,13 +54,13 @@ export default function RegistrationForm() {
     const newErrors = {};
 
     if (step === 2) {
-      if (!form.firstname.trim()) newErrors.firstname = "First name is required";
-      else if (form.firstname.length < 2 || form.firstname.length > 30)
-        newErrors.firstname = "First name must be 2–30 characters";
+      if (!form.firstName.trim()) newErrors.firstName = "First name is required";
+      else if (form.firstName.length < 2 || form.firstName.length > 30)
+        newErrors.firstName = "First name must be 2–30 characters";
 
-      if (!form.lastname.trim()) newErrors.lastname = "Last name is required";
-      else if (form.lastname.length < 2 || form.lastname.length > 30)
-        newErrors.lastname = "Last name must be 2–30 characters";
+      if (!form.lastName.trim()) newErrors.lastName = "Last name is required";
+      else if (form.lastName.length < 2 || form.lastName.length > 30)
+        newErrors.lastName = "Last name must be 2–30 characters";
     }
 
     if (step === 3) {
@@ -74,8 +74,8 @@ export default function RegistrationForm() {
     }
 
     if (step === 4) {
-      if (!form.birthday.trim()) newErrors.birthday = "Birthday is required";
-      else if (!isAdult(form.birthday)) newErrors.birthday = "You must be at least 18 years old";
+      if (!form.birthDate.trim()) newErrors.birthDate = "Birth date is required";
+      else if (!isAdult(form.birthDate)) newErrors.birthDate = "You must be at least 18 years old";
 
       if (!form.email.trim()) newErrors.email = "Email is required";
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
@@ -139,7 +139,7 @@ export default function RegistrationForm() {
         phone: `${form.countryCode}${form.phoneNumber}`
       };
 
-      const response = await axios.post(`${API_URL}/account/register`, finalForm, {
+      const response = await axios.post(`${BACKEND_URL}/user/register`, finalForm, {
         withCredentials: true
       });
 
@@ -166,9 +166,9 @@ export default function RegistrationForm() {
       <h3 className="text-xl font-bold mb-4 text-white">Your Profile Summary</h3>
       <div className="space-y-3 mb-6">
         {[
-          { label: "Name", value: `${form.firstname} ${form.lastname}` },
+          { label: "Name", value: `${form.firstName} ${form.lastName}` },
           { label: "Login", value: form.login },
-          { label: "Birthday", value: form.birthday ? new Date(form.birthday).toLocaleDateString() : "Not set" },
+          { label: "Birth Date", value: form.birthDate ? new Date(form.birthDate).toLocaleDateString() : "Not set" },
           { label: "Email", value: form.email },
           { label: "Phone", value: `${form.countryCode}${form.phoneNumber}` }
         ].map((item, index) => (
@@ -217,8 +217,8 @@ export default function RegistrationForm() {
 
           {step === 2 && (
             <div className="flex gap-4 animate-fade-in" onKeyDown={handleKeyDown}>
-              <InputField name="firstname" value={form.firstname} onChange={handleChange} error={errors.firstname} placeholder="First name" autoFocus />
-              <InputField name="lastname" value={form.lastname} onChange={handleChange} error={errors.lastname} placeholder="Last name" />
+              <InputField name="firstName" value={form.firstname} onChange={handleChange} error={errors.firstname} placeholder="First name" autoFocus />
+              <InputField name="lastName" value={form.lastName} onChange={handleChange} error={errors.lastName} placeholder="Last name" />
             </div>
           )}
 
@@ -231,7 +231,7 @@ export default function RegistrationForm() {
 
           {step === 4 && (
             <div className="space-y-4 animate-fade-in" onKeyDown={handleKeyDown}>
-              <InputField name="birthday" type="date" value={form.birthday} onChange={handleChange} error={errors.birthday} placeholder="Birthday" autoFocus
+              <InputField name="birthDate" type="date" value={form.birthDate} onChange={handleChange} error={errors.birthDate} placeholder="Birth date" autoFocus
                 max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]} />
               <InputField name="email" type="email" value={form.email} onChange={handleChange} error={errors.email} placeholder="Email" />
               <div className="flex gap-2">

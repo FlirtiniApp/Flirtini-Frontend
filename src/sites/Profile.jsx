@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const BACKEND_URL = "http://localhost:3000"
   const [user, setUser] = useState(null);
   const [lists, setLists] = useState([]);
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const Profile = () => {
 
     try {
       const response = await axios.post(
-        "https://172.24.3.162:3000/account/profile",
+        `${BACKEND_URL}/user/profile`,
         { withCredentials: true },
         {
           headers: {
