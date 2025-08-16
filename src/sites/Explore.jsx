@@ -6,6 +6,8 @@ import Lists from "../components/Lists";
 const Explore = () => {
   const BACKEND_URL = "http://localhost:3000";
 
+  const token = localStorage.getItem("token");
+
   const drinkRef = useRef(null);
   const drinkComponentRef = useRef(null);
 
@@ -54,9 +56,19 @@ const Explore = () => {
   };
 
   const fetchSingleDrink = async () => {
+    if (!token) {
+      console.error("Error fetching drink: token not provided");
+      return;
+    }
+
     try {
       const response = await axios.get(
-        `${BACKEND_URL}/alcohol/getrandomdrink`
+        `${BACKEND_URL}/alcohol/getrandomdrink`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        }
       );
       const drink = response.data;
       setDrinks((prev) => [...prev, drink]);
@@ -81,7 +93,7 @@ const Explore = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          withCredentials:true,
+          withCredentials: true,
         }
       );
 
