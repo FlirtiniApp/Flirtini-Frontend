@@ -13,16 +13,15 @@ const Profile = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         `${BACKEND_URL}/user/profile`,
-        { withCredentials: true },
-        {
+        { withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      setUser(response.data);
+      setUser(response.data.user);
     } catch (err) {
       console.error("Failed to load profile:", err);
     }
@@ -93,12 +92,6 @@ const Profile = () => {
               <p>
                 <span className="text-3xl mr-2">Email:</span>
                 <span className="text-white/80 text-2xl">{user?.email}</span>
-              </p>
-              <p>
-                <span className="text-3xl mr-2">Phone number:</span>
-                <span className="text-white/80 text-2xl">
-                  {user?.phoneNumber}
-                </span>
               </p>
             </div>
 
