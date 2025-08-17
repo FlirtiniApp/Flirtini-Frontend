@@ -87,7 +87,7 @@ const Explore = () => {
     }
 
     try {
-      await axios.post(`${BACKEND_URL}/favourite`,
+      await axios.post(`${BACKEND_URL}/favourite/addtofavourites`,
         body,
         {
           headers: {
