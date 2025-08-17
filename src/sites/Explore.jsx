@@ -79,7 +79,6 @@ const Explore = () => {
 
   const postSingleDrink = async (drinkId, drinkName) => {
     const token = localStorage.getItem("token");
-    console.log(token);
 
     const body = {
       drinkId: Number(drinkId),
