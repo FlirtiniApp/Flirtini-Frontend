@@ -4,15 +4,19 @@ import { useState, useEffect } from "react";
 import SingleDrink from "../components/SingleDrink";
 
 const Liked = () => {
-  const ALCOHOL_API_URL = "https://172.24.3.60:3000";
+  const BACKEND_URL = "http://localhost:3000";
+
+  const token = localStorage.getItem("token");
 
   const [fullLikes, setFullLikes] = useState([]);
-  const [likes, setLikes] = useState([]);
 
   const fetchDrink = async (id) => {
     try {
-      const response = await axios.get(
-        `${ALCOHOL_API_URL}/alcohol/drink?id=${id}`
+      const response = await axios.get(`${BACKEND_URL}/alcohol/getdrinkbyid?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
       );
       const drink = response.data;
       setFullLikes((prev) => [...prev, drink]);
@@ -22,18 +26,16 @@ const Liked = () => {
   };
 
   const fetchLiked = async () => {
-    const token = localStorage.getItem("token");
-
     await axios
-      .get("http://172.24.3.84:6969/favourite", {
+      .get(`${BACKEND_URL}/favourite/getfavourites`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => response.data)
       .then((data) => {
+        data = data.favourites;
         console.log(data);
-        setLikes(data);
         Array.from(data).forEach((drink) => {
           fetchDrink(drink.drinkId);
         });
