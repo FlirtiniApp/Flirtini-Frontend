@@ -49,7 +49,7 @@ const Liked = () => {
   return (
     <div className="p-8 text-white">
       <h1 className="text-4xl font-semibold mb-6 text-white">
-        Your <span className="text-purple-400">LIKED</span> drinks
+        Your <span className="text-purple-400">Liked</span> Drinks
       </h1>
 
       {fullLikes.length > 0 ? (
@@ -57,7 +57,7 @@ const Liked = () => {
           {fullLikes.map((drink) => (
             <div
               key={drink.id}
-              className="bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow flex  justify-center"
+              className="shadow-md hover:shadow-lg transition-shadow flex justify-center"
             >
               <SingleDrink
                 key={drink.id}
