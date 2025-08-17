@@ -26,20 +26,22 @@ const Liked = () => {
   };
 
   const fetchLiked = async () => {
-    await axios
-      .get(`${BACKEND_URL}/favourite/getfavourites`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        data = data.favourites;
-        console.log(data);
-        Array.from(data).forEach((drink) => {
-          fetchDrink(drink.drinkId);
+    try {
+      const response = await axios
+        .get(`${BACKEND_URL}/favourite/getfavourites`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
-      });
+
+      const data = response.data.favourites;
+
+      for (const drink of data) {
+        await fetchDrink(drink.drinkId);
+      }
+    } catch (error) {
+      console.error("Error fetching favourites:", error);
+    }
   };
 
   useEffect(() => {
