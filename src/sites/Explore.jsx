@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../config";
+
 import SingleDrink from "../components/SingleDrink";
 import Lists from "../components/Lists";
 
 const Explore = () => {
-  const BACKEND_URL = "http://localhost:3000";
 
   const token = localStorage.getItem("token");
 

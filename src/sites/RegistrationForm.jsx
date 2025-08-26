@@ -1,8 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
-const BACKEND_URL = 'http://localhost:3000';
+import { BACKEND_URL } from "../config";
 
 const InputField = ({ name, value, onChange, error, type = "text", placeholder, required = true, ...props }) => (
   <div className="flex-1">

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 
 const Profile = () => {
-  const BACKEND_URL = "http://localhost:3000"
   const [user, setUser] = useState(null);
   const [lists, setLists] = useState([]);
   const navigate = useNavigate();

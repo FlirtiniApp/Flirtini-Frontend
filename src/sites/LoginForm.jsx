@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 
 export default function LoginForm() {
-  const BACKEND_URL = "http://localhost:3000";
 
   const [credentials, setCredentials] = useState({ login: "", password: "" });
   const [errors, setErrors] = useState({});
